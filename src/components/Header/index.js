@@ -24,14 +24,23 @@ const AppHeader = ({
       <Header.Content as="h2">{label}</Header.Content>
       {isAuthenticated &&
         (isSyncRunning ? (
-          <Icon name="refresh" loading />
+
+          <div>
+            同步云端 
+            <Icon name="refresh" loading />
+          </div>
+
         ) : (
-          <Icon
-            name="refresh"
-            color={hasPendingChanges ? 'olive' : undefined}
-            onClick={sync}
-            style={{ cursor: 'pointer' }}
-          />
+
+          <div>
+            同步云端
+            <Icon
+              name="refresh"
+              color={hasPendingChanges ? 'olive' : undefined}
+              onClick={sync}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
         ))}
     </Header>
   </header>
