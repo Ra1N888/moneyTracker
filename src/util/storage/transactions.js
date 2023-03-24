@@ -11,33 +11,34 @@ import {
 import intersection from 'lodash/intersection';
 
 export default {
-  sync,
-  load,
-  getAll,
-  loadRecent,
-  loadFiltered,
-  save,
-  remove,
-  destroy
+  sync, // 双向同步
+  load, // 将一个 doc 从 Storage 转成 state 类型
+  getAll, // Storage => state
+  loadRecent, // load 多个 docs，但不超过限制数额
+  loadFiltered, // load 符合筛选条件的 docs
+  save, // save to localDB
+  remove, // 将doc的delete设置成true，也就是软删
+  destroy, // 删除local和remote数据库
 };
 
 async function sync(readOnly = true) {
-  if (!remoteTransactionsDB()) return;
+  if (!remoteTransactionsDB()) return; // if this user store data at local, remoteDB doesn't exist, don't need sync operation.
+  
   const options = { batch_size: 500 };
-
   await transactionsDB()
     .replicate.from(remoteTransactionsDB(), options)
-    .on('change', async update => {
+    .on('change', async update => { // 'change' event fires when the replication has written a new document. 
       await Promise.all(update.docs.map(processIncomingTransaction));
     });
 
-  if (!readOnly) {
+  if (!readOnly) { // reaOnly === false , meaning this is not demo version, localDB can be replicated to the remoteDB.
     await transactionsDB().replicate.to(remoteTransactionsDB(), options);
   }
 }
 
+// *
 async function processIncomingTransaction(tx) {
-  if (tx._id.startsWith('T') && !tx._id.includes('-') && !tx._deleted) {
+  if (tx._id.startsWith('T') && !tx._id.includes('-') && !tx._deleted) { // 不包含‘-‘是什么情况
     await save({
       ...tx,
       id: `T${tx.date}-${tx._id.substr(1)}`,
@@ -129,11 +130,21 @@ function filterByTags(docs, tags) {
     : docs;
 }
 
+
+// what's its function
+// {
+//   ...tx,
+//   id: `T${tx.date}-${tx._id.substr(1)}`,
+//   date: undefined,
+//   tags: tx.tags && tx.tags.length ? tx.tags : undefined,
+//   note: tx.note && tx.note.length ? tx.note : undefined
+// }
+
 function save(transaction) {
   return transactionsDB()
     .get(transaction.id)
     .then(doc =>
-      transactionsDB().put({
+      transactionsDB().put({ // update a doc
         ...doc,
         ...stateToStorage(transaction)
       })
@@ -141,7 +152,7 @@ function save(transaction) {
     .catch(err => {
       if (err.status !== 404) throw err;
 
-      return transactionsDB().put({
+      return transactionsDB().put({ // create a new doc
         _id: transaction.id,
         ...stateToStorage(transaction)
       });

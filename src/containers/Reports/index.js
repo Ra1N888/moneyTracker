@@ -8,7 +8,7 @@ import Navigation from './Navigation';
 import Filter from './Filter';
 
 class Reports extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.loadAccounts();
     this.props.loadReport();
   }

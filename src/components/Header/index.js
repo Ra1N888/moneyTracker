@@ -26,7 +26,7 @@ const AppHeader = ({
         (isSyncRunning ? (
 
           <div>
-            同步云端 
+            同步云端
             <Icon name="refresh" loading />
           </div>
 

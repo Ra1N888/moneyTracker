@@ -38,7 +38,7 @@ export default [
   {
     path: '/budget',
     exact: false,
-    label: 'Budget',
+    label: 'Investment',
     icon: 'shopping basket',
     component: WorkInProgress
   },

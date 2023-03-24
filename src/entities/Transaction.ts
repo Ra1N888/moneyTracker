@@ -2,6 +2,12 @@ import format from 'date-fns/format';
 import Currency from 'entities/Currency';
 import { toLocalTimestamp } from 'util/timezone';
 
+export enum TransationKindT {
+  Expense,
+  Transfer,
+  Income
+}
+
 interface TransactionBaseT {
   kind: TransationKindT;
   accountId: string;
@@ -34,12 +40,6 @@ export interface TransactionStorageT extends TransactionBaseT {
   tags?: string[];
 }
 
-export enum TransationKindT {
-  Expense,
-  Transfer,
-  Income
-}
-
 const { Expense, Transfer, Income } = TransationKindT;
 const TransactionKindToText: { [kind in TransationKindT]: string } = {
   [Expense]: 'Expense',
@@ -48,7 +48,7 @@ const TransactionKindToText: { [kind in TransationKindT]: string } = {
 };
 
 export const defaultKind = Expense;
-export const recentListLimit = 5;
+export const recentListLimit = 5; // 主页面的交易记录最多显示五条
 export const rowsPerSearchPage = 10;
 export const pagerSizeMobile = 5;
 export const pagerSizeDesktop = 9;

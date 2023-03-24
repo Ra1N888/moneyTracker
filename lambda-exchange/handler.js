@@ -7,7 +7,7 @@ module.exports.currencyExchange = async ({ queryStringParameters }) => {
   const pairs = queryStringParameters?.pairs?.toUpperCase().split(',') || [];
 
   try {
-    const exchangeRate = await getExchangeRateCached();
+    const exchangeRate = await getExchangeRateCached(); // { USD: 1, EUR: 0.834499, ... }
 
     return {
       statusCode: 200,
@@ -54,6 +54,7 @@ module.exports.currencyExchange = async ({ queryStringParameters }) => {
     return new Promise((resolve, reject) => {
       let data = '';
       const key = process.env.API_KEY;
+      
       if (!key) {
         return reject('API key is missing!');
       }
@@ -66,7 +67,7 @@ module.exports.currencyExchange = async ({ queryStringParameters }) => {
           });
           res.on('end', () => {
             const rate = JSON.parse(data);
-            resolve(convertRate(rate));
+            resolve(convertRate(rate)); 
           });
         }
       );
@@ -78,37 +79,6 @@ module.exports.currencyExchange = async ({ queryStringParameters }) => {
   }
 
   /**
-   * Get exchange rate for given pair using given base exchange rate.
-   * Use cross rate if pair's base is not equal to rate base (USD).
-   *
-   * @param {object} baseRate - dict { USD: 1, EUR: 0.834499, ... }
-   * @param {string} pair - "USDEUR", "EURUSD", "EURJPY", etc
-   * @return {object} dict { id: "USDEUR", rate: "0.834499" }
-   */
-  function getRateForPair(baseRate, pair) {
-    if (pair.length != 6) {
-      throw new Error(
-        `Invalid pair "${pair}". Must be 6-char string, e.g. "USDEUR"`
-      );
-    }
-
-    const source = pair.substr(0, 3);
-    const target = pair.substr(3, 3);
-
-    if (!baseRate[source]) throw new Error(`Unknown currency code "${source}"`);
-    if (!baseRate[target]) throw new Error(`Unknown currency code "${target}"`);
-
-    return {
-      id: pair,
-      rate: Number(
-        source === BASE
-          ? baseRate[target]
-          : (1 / baseRate[source]) * baseRate[target]
-      ).toFixed(6)
-    };
-  }
-
-  /**
    * Convert response from API service to internal rate object.
    *
    * @param {object} dict { ..., quotes: { USDUSD: 1, USDEUR: 0.834499, ... } }
@@ -117,11 +87,46 @@ module.exports.currencyExchange = async ({ queryStringParameters }) => {
   function convertRate(rate) {
     return Object.keys(rate.quotes).reduce(
       (acc, pair) => {
-        const code = pair.substr(3, 3);
-        acc[code] = rate.quotes[pair];
+        const code = pair.substr(3, 3); // 取出 "USDEUR" 中的后半截 "EUR"
+        acc[code] = rate.quotes[pair]; // "EUR": 0.834499
         return acc;
       },
       { [BASE]: 1 }
     );
   }
+
+    /**
+   * Get exchange rate for given pair using given base exchange rate.
+   * Use cross rate if pair's base is not equal to rate base (USD).
+   *
+   * @param {object} baseRate - dict { USD: 1, EUR: 0.834499, ... }
+   * @param {string} pair - "USDEUR", "EURUSD", "EURJPY", etc
+   * @return {object} dict { id: "USDEUR", rate: "0.834499" }
+   */
+    function getRateForPair(baseRate, pair) {
+        if (pair.length != 6) {
+          throw new Error(
+            `Invalid pair "${pair}". Must be 6-char string, e.g. "USDEUR"`
+          );
+        }
+    
+        const source = pair.substr(0, 3); // 前半截
+        const target = pair.substr(3, 3); // 后半截
+    
+        if (!baseRate[source]) throw new Error(`Unknown currency code "${source}"`);
+        if (!baseRate[target]) throw new Error(`Unknown currency code "${target}"`);
+    
+        return {
+          id: pair,
+          rate: Number(
+            source === BASE
+              ? baseRate[target]
+              : (1 / baseRate[source]) * baseRate[target]
+          ).toFixed(6)
+        };
+      }
+
+
 };
+
+

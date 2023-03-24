@@ -17,7 +17,7 @@ import AccountForm from './Form';
 import { getAccountsAsOptions } from '../../selectors/entities/accounts';
 
 class Accounts extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.loadAccounts();
   }
 

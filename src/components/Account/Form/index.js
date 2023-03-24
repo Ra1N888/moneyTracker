@@ -23,6 +23,7 @@ class AccountForm extends React.Component {
   render() {
     return (
       <Form className="account-form" onSubmit={this.handleSubmit}>
+
         <Form.Group>
           <Form.Input
             width={9}
@@ -40,7 +41,9 @@ class AccountForm extends React.Component {
             onChange={this.handleGroupChange}
           />
         </Form.Group>
+
         <BalanceTable {...this.props} />
+        
         <Form.Group unstackable>
           <Form.Field width={9} style={{ paddingTop: '0.5em' }}>
             <Checkbox
@@ -51,6 +54,7 @@ class AccountForm extends React.Component {
           </Form.Field>
           <Form.Button width={7} primary fluid content="Save Account" />
         </Form.Group>
+
       </Form>
     );
   }

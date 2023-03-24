@@ -1,9 +1,9 @@
 import { tagsDB, remoteTagsDB, destroyTagsDB } from './pouchdb';
 
 export default {
-  sync,
-  load,
-  updateUsage,
+  sync, // 返回布尔值 hasChanges
+  load, // 根据kind，load all tags
+  updateUsage, // update或者是creat，取决存不存在
   destroy
 };
 
@@ -11,10 +11,13 @@ async function sync(readOnly = false) {
   let hasChanges = false;
   if (!remoteTagsDB()) return hasChanges;
 
+  // remote => local
   const from = await tagsDB().replicate.from(remoteTagsDB());
   if (from.docs_written > 0) hasChanges = true;
+  
   if (readOnly) return hasChanges;
 
+  // local => remote
   await tagsDB().replicate.to(remoteTagsDB());
 
   return hasChanges;
@@ -42,7 +45,7 @@ function load(kind) {
 }
 
 function updateUsage(kind, tag, delta) {
-  const id = `t${kind}/${tag}`;
+  const id = `t${kind}/${tag}`; // 't0/食物’
   return tagsDB()
     .get(id)
     .then(doc =>

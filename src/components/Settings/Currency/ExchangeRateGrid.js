@@ -19,6 +19,8 @@ const ExchangeRateGrid = props => {
           <Table.Row key={code}>
             <Table.Cell textAlign="center" content={code} />
             {currencies.map(other => {
+
+                console.log(other+''+code)
               const rate = props.exchangeRate[other] / props.exchangeRate[code];
               return (
                 <Table.Cell

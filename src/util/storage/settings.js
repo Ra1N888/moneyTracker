@@ -7,7 +7,7 @@ import Currency from '../../entities/Currency';
 
 export default {
   load,
-  save,
+  save, // saveRemote
   saveLocal,
   destroy
 };
@@ -61,7 +61,7 @@ async function mergeLocalWithSyncedSettings(local) {
   return settingsDB()
     .get('settings')
     .then(settings => settings, err => defaultSettings)
-    .then(settings => syncSettings(settings))
+    .then(settings => syncSettings(settings)) 
     .then(settings => ({ ...settings, ...local }));
 }
 

@@ -6,12 +6,12 @@ import {
 } from '../../entities/Account';
 
 export default {
-  sync,
+  sync, // 双向或者单向同步 + 更新 localstorage
   loadAll,
-  save,
+  save, // saveLocal
   archive,
-  mutateBalance,
-  remove,
+  mutateBalance, // 结果为state类型
+  remove, // 软删doc
   destroy
 };
 
@@ -19,14 +19,16 @@ async function sync(readOnly = false) {
   if (!remoteAccountsDB()) return;
   let accounts;
 
+  // remote => local
   const from = await accountsDB().replicate.from(remoteAccountsDB());
   if (from.docs_written > 0) {
     accounts = await loadAll();
-    updateLastSyncedBalance(accounts);
+    updateLastSyncedBalance(accounts); // 更新localstorage
   }
 
   if (readOnly) return;
 
+    // local => storage
   const to = await accountsDB().replicate.to(remoteAccountsDB());
   if (to.docs_written > 0) {
     accounts = await loadAll();
@@ -72,9 +74,9 @@ function archive(accountId) {
 function mutateBalance({ accountId, currency, amount }) {
   return accountsDB()
     .get(accountId)
-    .then(doc => accountsDB().put(mutateAccountBalance(doc, currency, amount)))
+    .then(doc => accountsDB().put(mutateAccountBalance(doc, currency, amount))) // 得到的是 AccountStorageT
     .then(({ rev }) => accountsDB().get(accountId, rev))
-    .then(doc => storageToState(doc));
+    .then(doc => storageToState(doc)); // 转成state类型
 }
 
 function remove(accountId) {

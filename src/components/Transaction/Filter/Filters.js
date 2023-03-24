@@ -13,7 +13,7 @@ class Filters extends React.Component {
     };
   }
 
-  componentWillReceiveProps({ appliedAccounts, appliedTags }) {
+  UNSAFE_componentWillReceiveProps({ appliedAccounts, appliedTags }) {
     this.setState({
       accounts: appliedAccounts,
       tags: appliedTags

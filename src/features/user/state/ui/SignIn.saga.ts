@@ -7,7 +7,7 @@ import { syncSaga } from 'sagas/sync';
 import { loadSetting } from 'sagas/settings';
 import { isUserLoggedIn } from 'features/user/state/User.saga';
 
-export function* sendCodeSaga() {
+export function* sendCodeSaga(): any {
   const email = yield select(getSignInEmail);
   try {
     yield call(Auth.sendCode, email);
@@ -17,7 +17,7 @@ export function* sendCodeSaga() {
   }
 }
 
-export function* verifyCodeSaga() {
+export function* verifyCodeSaga(): any {
   const email = yield select(getSignInEmail);
   const code = yield select(getSignInCode);
   try {
@@ -28,7 +28,7 @@ export function* verifyCodeSaga() {
   }
 }
 
-export function* finishAuthSaga() {
+export function* finishAuthSaga(): any {
   const accessToken = yield call(Auth.parseHash);
   const userInfo = yield call(Auth.getUserInfo, accessToken);
   yield call([localStorage, 'setItem'], 'userInfo', JSON.stringify(userInfo));

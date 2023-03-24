@@ -12,18 +12,22 @@ import {
   removeAccountFailure,
   removeAccountSuccess
 } from '../actions/entities/accounts';
+import {
+  removeTransaction,
+  saveTransaction
+} from '../actions/entities/transactions';
+
 import { getForm } from '../selectors/ui/form/transaction';
+
 import {
   resetTransactionFormSaga,
   removeTransactionSaga,
   saveTransactionSaga
 } from './transactions';
-import {
-  removeTransaction,
-  saveTransaction
-} from '../actions/entities/transactions';
+
 import AccountsStorage from '../util/storage/accounts';
 import TransactionsStorage from '../util/storage/transactions';
+
 import { DeleteStrategyT } from '../entities/Account';
 
 export function* loadAccountsSaga() {

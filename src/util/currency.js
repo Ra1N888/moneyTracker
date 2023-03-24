@@ -5,6 +5,8 @@ export function fetchExchangeRates(base, target) {
   const exchangeServiceUrl = process.env.REACT_APP_XCHANGE_URL;
   const pairs = target.map(code => `${base}${code}`);
 
+  console.log('trigger fetch rate')
+
   return fetch(`${exchangeServiceUrl}?pairs=${pairs.join(',')}`)
     .then(body => body.json())
     .then(response =>
@@ -12,5 +14,11 @@ export function fetchExchangeRates(base, target) {
         result[row.id.substring(3)] = parseFloat(row['rate']);
         return result;
       }, {})
-    );
+    )
+    .catch((error)=>{
+        
+        console.log(error)
+        
+    })
+    ;
 }

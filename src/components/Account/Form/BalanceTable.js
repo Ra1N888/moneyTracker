@@ -5,12 +5,12 @@ import Amount from '../../../components/Amount';
 import Currency from '../../../entities/Currency';
 
 class BalanceTable extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.updateCurrencyList(this.props.base, this.props.secondary);
     this.setInitialCurrencyCheckbox(this.props.base);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.updateCurrencyList(nextProps.base, nextProps.secondary);
     this.setInitialCurrencyCheckbox(nextProps.base);
   }

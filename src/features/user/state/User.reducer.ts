@@ -12,10 +12,10 @@ export interface UserStateT {
 export type UserActionT = ActionType<typeof user> & UserUiActionT;
 
 export default combineReducers<UserStateT, UserActionT>({
-  isDemoUser: (state = false, action) => {
+  isDemoUser: (state = false, action: any) => {
     return action.type === getType(user.setDemoUser) ? true : state;
   },
-  isSignedIn: (state = false, action) => {
+  isSignedIn: (state = false, action: any) => {
     return action.type === getType(user.signInSuccess) ? true : state;
   },
   ui: UserUiReducer

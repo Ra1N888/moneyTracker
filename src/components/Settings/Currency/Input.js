@@ -11,7 +11,7 @@ class Input extends React.Component {
     this.updateSecondaryOptions(props.base);
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     this.updateSecondaryOptions(props.base);
   }
 
