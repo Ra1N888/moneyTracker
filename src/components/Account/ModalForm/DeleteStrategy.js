@@ -35,9 +35,9 @@ class DeleteStrategy extends React.Component {
     const hasMultipleAccounts = this.props.accountOptions.length > 0;
     return (
       <React.Fragment>
-        <h3>You are about to delete account "{this.props.form.name}"</h3>
+        <h3>你将要删除账户 "{this.props.form.name}"</h3>
         <p style={{ marginTop: '1em' }}>
-          What should we do with transactions linked to this account?
+          我们应该如何处理与该账户相关的交易？
         </p>
         <Form>
           {getDeleteStartegyOptions(hasMultipleAccounts).map(strategy => (
@@ -74,7 +74,7 @@ class DeleteStrategy extends React.Component {
                 negative
                 labelPosition="right"
                 icon="arrow right"
-                content="Proceed"
+                content="继续执行"
                 onClick={this.onProceed}
               />
             )}

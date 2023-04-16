@@ -108,7 +108,7 @@ class TransactionForm extends React.Component {
                         search
                         allowAdditions
                         closeOnChange
-                        placeholder="Choose existing tags or add new"
+                        placeholder="选择或创建新标签"
                         value={this.props.form.tags[this.props.form.kind]}
                         options={this.props.tagsOptions}
                         onChange={this.onChange(this.props.changeTags)}
@@ -123,7 +123,7 @@ class TransactionForm extends React.Component {
                 <div className="transaction-form-grid__field">
                   <Form.Field>
                     <Input
-                      placeholder="Note"
+                      placeholder="备注"
                       value={this.props.form.note}
                       onChange={this.onChange(this.props.changeNote)}
                     />
@@ -148,7 +148,7 @@ class TransactionForm extends React.Component {
                     fluid
                     disabled={parseFloat(this.props.form.amount) === 0}
                   >
-                    {this.props.form.id ? 'Save' : 'Add'}{' '}
+                    {this.props.form.id ? '保存' : '创建'}{' '}
                     {getKindLabel(this.props.form.kind)}
                   </Button>
                 </div>

@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { syncSaga } from 'sagas/sync';
 import * as user from './User.action';
 
-export function* isDemoUser() {
+export function* isDemoUser(): any {
   if (window.location.hostname === process.env.REACT_APP_DEMO_HOST) {
     const userInfo = yield call([localStorage, 'getItem'], 'userInfo');
     if (!userInfo) {
@@ -25,7 +25,7 @@ export function* isDemoUser() {
   }
 }
 
-export function* isUserLoggedIn() {
+export function* isUserLoggedIn(): any {
   const userInfo = yield call([localStorage, 'getItem'], 'userInfo');
   if (userInfo) yield put(user.signInSuccess());
 }

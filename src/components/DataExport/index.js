@@ -3,19 +3,30 @@ import PropTypes from 'prop-types';
 import { Button, Message } from 'semantic-ui-react';
 import './index.css';
 import {save} from 'save-file';
+import { usePapaParse } from 'react-papaparse';
 import TransactionsStorage from '../../util/storage/transactions';
 
+
 class DataExport extends React.Component {
+  
 
   handleSaveFile = async () => {
+
+
     let transactions = await TransactionsStorage.getAll();
-    save(JSON.stringify(transactions), JSON.stringify(new Date(Date.now())) + '_export.json');
+    const jsonVersion = JSON.stringify(transactions);
+
+    const { jsonToCSV } = usePapaParse();
+    const csv = jsonToCSV(jsonVersion)
+    save(csv, JSON.stringify(new Date(Date.now())) + '_export.csv');
+
+
   }
 
   render() {
     return (
       <div className="mt-dataExport">
-        <p>Export transactions to a JSON file.</p>
+        <p>导出交易记录的csv文件</p>
         {this.props.error && (
           <Message
             error
@@ -27,7 +38,7 @@ class DataExport extends React.Component {
         {!this.props.isFileSelected && (
           <React.Fragment>
             <Button
-              content="Export JSON File"
+              content="导出文件"
               icon="file text"
               onClick={this.handleSaveFile}
             />            

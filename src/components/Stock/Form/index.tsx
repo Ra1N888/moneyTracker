@@ -42,7 +42,7 @@ const StockForm = () => {
                     />
                 </Form.Group>
                 <Form.Group unstackable>
-                    <Form.Button width={7} primary fluid content="Save Account" />
+                    <Form.Button width={7} primary fluid content="创建此账户" />
                 </Form.Group>
             </Form>
         </div>

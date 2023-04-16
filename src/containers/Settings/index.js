@@ -8,17 +8,17 @@ import CollapsibleSection from '../../components/CollapsibleSection';
 
 const Settings = () => (
   <div className="container-full-page mt-settings">
-    <CollapsibleSection name="settings_currency" label="Currency">
+    <CollapsibleSection name="settings_currency" label="汇率">
       <CurrencyInput />
       <CurrenchExchangeRate />
     </CollapsibleSection>
-    <CollapsibleSection name="settings_import" label="Data Import">
+    <CollapsibleSection name="settings_import" label="交易导入">
       <DataImport />      
     </CollapsibleSection>
-    <CollapsibleSection name="settings_export" label="Data Export">
+    <CollapsibleSection name="settings_export" label="交易导出">
       <DataExport />
       </CollapsibleSection>
-    <CollapsibleSection name="settings_user" label="User">
+    <CollapsibleSection name="settings_user" label="用户">
       <User />
     </CollapsibleSection>
   </div>

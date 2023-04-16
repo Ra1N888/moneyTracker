@@ -7,6 +7,7 @@ import AccountsStorage from 'util/storage/accounts';
 import SettingsStorage from 'util/storage/settings';
 import TagsStorage from 'util/storage/tags';
 import TransactionsStorage from 'util/storage/transactions';
+import StocksStorage from 'util/storage/stocks';
 
 export function* signOutSaga() {
   try {
@@ -14,13 +15,14 @@ export function* signOutSaga() {
     yield call(SettingsStorage.destroy);
     yield call(TagsStorage.destroy);
     yield call(TransactionsStorage.destroy);
+    yield call(StocksStorage.destroy);
     yield call([localStorage, 'clear']);
 
     yield put(signOutSuccess());
     yield isDemoUser();
     yield loadSetting();
   } catch (error) {
-    yield put(signOutFailure(error));
+    // yield put(signOutFailure(error));
   }
 }
 

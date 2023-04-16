@@ -7,9 +7,9 @@ import {
   verifyCode,
   finishAuth
 } from 'features/user/state/ui/SignIn.action';
-import { RootStateT } from 'reducers';
+// import { RootStateT } from 'reducers';
 
-const mapStateToProps = ({ user }: RootStateT) => ({
+const mapStateToProps = ({ user }: any) => ({
   ...user.ui.signIn,
   isSignedIn: user.isSignedIn
 });

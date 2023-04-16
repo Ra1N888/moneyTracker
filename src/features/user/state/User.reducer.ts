@@ -1,17 +1,17 @@
 import { combineReducers } from 'redux';
 import { ActionType, getType } from 'typesafe-actions';
 import * as user from './User.action';
-import { UserUiReducer, UserUiStateT, UserUiActionT } from './ui';
+import { UserUiReducer } from './ui';
 
-export interface UserStateT {
-  readonly isDemoUser: boolean;
-  readonly isSignedIn: boolean;
-  readonly ui: UserUiStateT;
-}
+// export interface UserStateT {
+//   readonly isDemoUser: boolean;
+//   readonly isSignedIn: boolean;
+//   readonly ui: UserUiStateT;
+// }
 
-export type UserActionT = ActionType<typeof user> & UserUiActionT;
+// export type UserActionT = ActionType<typeof user> & UserUiActionT;
 
-export default combineReducers<UserStateT, UserActionT>({
+export default combineReducers({
   isDemoUser: (state = false, action: any) => {
     return action.type === getType(user.setDemoUser) ? true : state;
   },

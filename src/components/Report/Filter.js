@@ -19,7 +19,7 @@ class Filter extends React.Component {
           multiple
           selection
           fluid
-          placeholder="Specify accounts"
+          placeholder="选定账户"
           value={this.props.accounts}
           options={this.props.accountOptions}
           onChange={this.handleAccountsChange}
@@ -29,7 +29,7 @@ class Filter extends React.Component {
           selection
           fluid
           search
-          placeholder="Exclude tags"
+          placeholder="标签排除"
           value={this.props.excludeTags}
           options={this.props.tagsOptions}
           onChange={this.handleTagsChange}

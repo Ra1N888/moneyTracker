@@ -27,6 +27,11 @@ function remoteInstance(name) {
         skipSetup: true, // Initially PouchDB checks if the database exists, and tries to create it, if it does not exist yet. Set this to true to skip this setup.
         auth: username && password ? { username, password } : undefined
       });
+    }else if(name === 'stocks'){
+        instancePool[instanceName] = new PouchDB(`http://127.0.0.1:5984/stocks_${userInfo.couchDB.username}`, {
+          skipSetup: false, // Initially PouchDB checks if the database exists, and tries to create it, if it does not exist yet. Set this to true to skip this setup.
+          auth:  { username: 'admin', password: 'zy58103286' }
+        });
     }
   }
 
@@ -50,13 +55,16 @@ export const settingsDB = () => instance('settings');
 export const accountsDB = () => instance('accounts');
 export const transactionsDB = () => instance('transactions');
 export const tagsDB = () => instance('tags');
+export const stocksDB = () => instance('stocks');
 
 export const remoteSettingsDB = () => remoteInstance('settings');
 export const remoteAccountsDB = () => remoteInstance('accounts');
 export const remoteTransactionsDB = () => remoteInstance('transactions');
 export const remoteTagsDB = () => remoteInstance('tags');
+export const remoteStocksDB = () => remoteInstance('stocks'); // 这个相当于废了
 
 export const destroySettingsDB = () => destroyInstance('settings');
 export const destroyAccountsDB = () => destroyInstance('accounts');
 export const destroyTransactionsDB = () => destroyInstance('transactions');
 export const destroyTagsDB = () => destroyInstance('tags');
+export const destroyStocksDB = () => destroyInstance('stocks');

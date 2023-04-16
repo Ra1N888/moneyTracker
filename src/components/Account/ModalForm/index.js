@@ -21,7 +21,7 @@ class ModalForm extends React.Component {
       >
         <Header
           icon="file text outline"
-          content={this.props.isEdit ? 'Edit Account' : 'New Account'}
+          content={this.props.isEdit ? '修改账户' : '添加新账户'}
         />
         <Modal.Content>
           {this.props.modal.isDeleteRequest ? (

@@ -2,8 +2,30 @@ import { TransationKindT } from '../entities/Transaction';
 
 const { Expense, Transfer, Income } = TransationKindT;
 
-export default file =>
-  new Promise((resolve, reject) => {
+
+let transactions = [];
+let accounts = new Map();
+let currencies = new Set();
+
+const SEPARATOR = ',';
+const COLUMN = {
+  DATE: 0,
+  ACCOUNT: 1,
+  TAGS: 2,
+  AMOUNT: 3,
+  CURRENCY: 4,
+  NOTE: 5,
+  TRANSFER: 6
+};
+
+export default file => {
+
+  transactions = [];
+  accounts = new Map();
+  currencies = new Set();
+
+
+  return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = reject;
     reader.onload = event => {
@@ -16,25 +38,16 @@ export default file =>
 
     reader.readAsText(file);
   });
-
-const SEPARATOR = ';';
-const COLUMN = {
-  DATE: 0,
-  ACCOUNT: 1,
-  TAGS: 2,
-  AMOUNT: 3,
-  CURRENCY: 4,
-  NOTE: 5,
-  TRANSFER: 6
-};
-
-const transactions = [];
-const accounts = new Map();
-const currencies = new Set();
+}
 
 function convert(rows) {
   const header = rows[0].split(SEPARATOR);
+  console.log('reader header: ' + header)
   if (header.length !== Object.keys(COLUMN).length) {
+
+    console.log('headerlength: ' + header.length)
+    console.log('needlength: ' + Object.keys(COLUMN).length)
+
     throw new Error(`Invalid file format!
     Must be a CSV with following columns:
     date;account;tags;amount;currency;description;transfer`);
@@ -56,7 +69,6 @@ function convert(rows) {
 
     if (transaction.kind === Transfer) {
       const nextRow = rows[++line].split(SEPARATOR);
-
       transaction.linkedAccount = getAccount(nextRow);
       transaction.linkedAmount = getAmount(nextRow);
       transaction.linkedCurrency = nextRow[COLUMN.CURRENCY];
@@ -68,6 +80,9 @@ function convert(rows) {
   return { transactions, accounts, currencies };
 }
 
+
+
+
 function getAmount(row) {
   return parseFloat(row[COLUMN.AMOUNT].replace(',', '.'));
 }
@@ -76,8 +91,8 @@ function getKind(row) {
   return row[COLUMN.TRANSFER].trim()
     ? Transfer
     : getAmount(row) < 0
-    ? Expense
-    : Income;
+      ? Expense
+      : Income;
 }
 
 function getAccount(row) {
@@ -91,14 +106,11 @@ function getAccount(row) {
   return account;
 }
 
-function getDate(row) {
-  return row[COLUMN.DATE]
-    .split('.')
-    .reverse()
-    .join('-');
+function getDate(row) { // 他期待的日期格式到底是什么？
+  return (new Date(row[COLUMN.DATE].split('.').join('-'))).getTime();
 }
 
-function getTags(row) {
+function getTags(row) { // xxx\xxx\xxx
   return (
     row[COLUMN.TAGS].trim() && {
       [getKind(row)]: row[COLUMN.TAGS].replace('\\', '/').split('/')

@@ -8,13 +8,13 @@ const Footer = ({ base, income, expense }) => (
     <Table fixed basic="very" unstackable>
       <Table.Body>
         <Table.Row>
-          <Table.Cell>Total income</Table.Cell>
+          <Table.Cell>总收入</Table.Cell>
           <Table.Cell textAlign="right">
             <Amount code={base} value={income} />
           </Table.Cell>
         </Table.Row>
         <Table.Row>
-          <Table.Cell>Total expense</Table.Cell>
+          <Table.Cell>总支出</Table.Cell>
           <Table.Cell textAlign="right">
             <Amount code={base} value={expense} />
           </Table.Cell>

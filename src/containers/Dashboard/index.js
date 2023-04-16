@@ -26,17 +26,17 @@ class Dashboard extends React.Component {
             <Grid.Column computer={6} mobile={16}>
               <CollapsibleSection
                 name="net_worth"
-                label="Net Worth"
+                label="净资产"
                 LabelComponent={NetWorth}
               >
                 <Accounts />
               </CollapsibleSection>
             </Grid.Column>
             <Grid.Column computer={10} mobile={16}>
-              <CollapsibleSection name="add_tx" label="New Transaction">
+              <CollapsibleSection name="add_tx" label="创建新交易">
                 <TransactionForm />
               </CollapsibleSection>
-              <CollapsibleSection name="recent_tx" label="Recent Transactions">
+              <CollapsibleSection name="recent_tx" label="最近记录">
                 <RecentTransactions />
               </CollapsibleSection>
             </Grid.Column>

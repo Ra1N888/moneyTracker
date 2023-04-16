@@ -38,7 +38,7 @@ class Input extends React.Component {
       <Form>
         <Form.Group widths="equal">
           <Form.Field>
-            <label>Base Currency</label>
+            <label>基础汇率</label>
             <Dropdown
               search
               selection
@@ -48,9 +48,9 @@ class Input extends React.Component {
             />
           </Form.Field>
           <Form.Field>
-            <label>Additional Currencies (optional)</label>
+            <label>其他汇率（可选）</label>
             <Dropdown
-              placeholder="Select additional currencies"
+              placeholder="请选择其他汇率"
               search
               selection
               multiple

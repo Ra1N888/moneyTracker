@@ -42,9 +42,9 @@ export interface TransactionStorageT extends TransactionBaseT {
 
 const { Expense, Transfer, Income } = TransationKindT;
 const TransactionKindToText: { [kind in TransationKindT]: string } = {
-  [Expense]: 'Expense',
-  [Transfer]: 'Transfer',
-  [Income]: 'Income'
+  [Expense]: '支出',
+  [Transfer]: '转账',
+  [Income]: '收入'
 };
 
 export const defaultKind = Expense;
@@ -88,10 +88,10 @@ export function stateToForm(state: TransactionStateT): TransactionFormT {
     linkedAmount:
       state.kind === Transfer && state.linkedAmount && state.linkedCurrency
         ? Currency.centsToString(
-            state.linkedAmount,
-            state.linkedCurrency,
-            false
-          )
+          state.linkedAmount,
+          state.linkedCurrency,
+          false
+        )
         : undefined,
     note: state.note || '',
     tags: {
@@ -118,6 +118,10 @@ export function storageToState({
   if (!_id) throw new Error('Transaction storage object missing "_id"');
   // date timestamp is encoded in transaction ID
   const dateRegexMatch = _id.match(/T([0-9]+)-/);
+
+  // if (dateRegexMatch) console.log('regmatch: ' + dateRegexMatch[1])
+  // console.log('xxx_amount:' + amount)
+
   if (!dateRegexMatch) throw new Error(`No date in Transaction ID "${_id}"`);
 
   return {

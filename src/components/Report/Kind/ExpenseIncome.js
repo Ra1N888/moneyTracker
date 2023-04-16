@@ -43,7 +43,7 @@ class ExpenseIncome extends React.Component {
                   showCents={false}
                 />
               </Statistic.Value>
-              <Statistic.Label>Total income</Statistic.Label>
+              <Statistic.Label>总收入</Statistic.Label>
             </Statistic>
             <Statistic>
               <Statistic.Value>
@@ -58,16 +58,19 @@ class ExpenseIncome extends React.Component {
                   showCents={false}
                 />
               </Statistic.Value>
-              <Statistic.Label>Total expense</Statistic.Label>
+              <Statistic.Label>总支出</Statistic.Label>
             </Statistic>
           </Statistic.Group>
         </div>
+
+
         <ChartistGraph
           type="Bar"
           className="ct-octave mt-report-expense-income"
           data={data}
           options={options}
         />
+        
       </React.Fragment>
     );
   }

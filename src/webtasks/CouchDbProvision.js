@@ -3,7 +3,7 @@ export default CouchDbProvision;
 function CouchDbProvision(user, context, callback) {
   const request = require('request');
   const uuidv4 = require('uuid').v4;
-  const databases = ['accounts', 'transactions', 'tags', 'settings'];
+  const databases = ['accounts', 'transactions', 'tags', 'settings', 'stocks'];
   var cookie;
 
   user.app_metadata = user.app_metadata || {};

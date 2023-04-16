@@ -140,9 +140,9 @@ export const getNetWorth = createSelector(
 
 const getBaseTotal = (account, base, rate) => {
 
-    console.log('account: ' + JSON.stringify(account))
-    console.log('base: ' + base)
-    console.log('rate: ' + JSON.stringify(rate))
+    // console.log('account: ' + JSON.stringify(account))
+    // console.log('base: ' + base)
+    // console.log('rate: ' + JSON.stringify(rate))
 
     const baseTotal = account.currencies.reduce(
         (total, code) =>
@@ -152,7 +152,7 @@ const getBaseTotal = (account, base, rate) => {
         0
     );
 
-    console.log('baseTotal: ' + baseTotal)
+    // console.log('baseTotal: ' + baseTotal)
 
     return baseTotal
 }

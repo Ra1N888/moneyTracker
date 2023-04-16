@@ -9,7 +9,7 @@ export default [
   {
     path: '/',
     exact: true,
-    label: 'Dashboard',
+    label: '仪表盘',
     icon: 'newspaper',
     component: Dashboard
   },
@@ -17,35 +17,35 @@ export default [
     path: '/transactions/:accountId?',
     link: '/transactions',
     exact: false,
-    label: 'Transactions',
+    label: '交易',
     icon: 'exchange',
     component: Transactions
   },
   {
     path: '/accounts',
     exact: false,
-    label: 'Accounts',
+    label: '账户',
     icon: 'credit card',
     component: Accounts
   },
   {
     path: '/reports',
     exact: false,
-    label: 'Reports',
+    label: '统计',
     icon: 'line chart',
     component: Reports
   },
   {
     path: '/budget',
     exact: false,
-    label: 'Investment',
+    label: '投资',
     icon: 'shopping basket',
     component: WorkInProgress
   },
   {
     path: '/settings',
     exact: true,
-    label: 'Settings',
+    label: '设置',
     icon: 'options',
     component: Settings
   }

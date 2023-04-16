@@ -1,75 +1,84 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import prettyBytes from '../../util/PrettyBytes';
 import { Button, Progress, Message } from 'semantic-ui-react';
 import './index.css';
 
-class DataImport extends React.Component {
-  handleFileChange = event => this.props.openImportFile(event.target.files[0]);
-  handleOpenFile = () => this.fileInput.click();
+const DataImport = ({isFileSelected, isProcessing, filename, filesize, linesToProcess, linesProcessed, error, openImportFile, discardImportFile,startDataImport}) => {
 
-  render() {
-    return (
-      <div className="mt-dataImport">
-        <p>Import transactions from a CSV file.</p>
-        {this.props.error && (
-          <Message
-            error
-            icon="warning circle"
-            header="Failed to import"
-            content={this.props.error}
+
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = event => {
+    const file = event.target.files[0];
+
+    console.log('onchange: ')
+    console.dir(file)
+    openImportFile(file)
+  };
+
+
+  const handleOpenFile = () => fileInputRef.current.click();
+
+
+  return (
+    <div className="mt-dataImport">
+      <p>导入交易记录的csv文件</p>
+      {error && (
+        <Message
+          error
+          icon="warning circle"
+          header="Failed to import"
+          content={error}
+        />
+      )}
+      {!isFileSelected && (
+        <React.Fragment>
+          <Button
+            content="打开文件"
+            icon="file text"
+            onClick={handleOpenFile}
           />
-        )}
-        {!this.props.isFileSelected && (
-          <React.Fragment>
-            <Button
-              content="Open File"
-              icon="file text"
-              onClick={this.handleOpenFile}
+          <input
+            type="file"
+            accept="text/csv"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+          />
+        </React.Fragment>
+      )}
+      {isFileSelected && (
+        <React.Fragment>
+          <p>
+            选择文件:{' '}
+            <strong>
+              {filename} ({prettyBytes(filesize)})
+            </strong>
+          </p>
+          {!isProcessing && (
+            <Button.Group>
+              <Button onClick={discardImportFile}>
+                删除文件
+              </Button>
+              <Button.Or />
+              <Button onClick={startDataImport} positive>
+                开始导入
+              </Button>
+            </Button.Group>
+          )}
+          {isProcessing && (
+            <Progress
+              active
+              indicating
+              autoSuccess
+              total={linesToProcess}
+              value={linesProcessed}
             />
-            <input
-              type="file"
-              accept="text/csv"
-              ref={input => {
-                this.fileInput = input;
-              }}
-              onChange={this.handleFileChange}
-            />
-          </React.Fragment>
-        )}
-        {this.props.isFileSelected && (
-          <React.Fragment>
-            <p>
-              Selected file:{' '}
-              <strong>
-                {this.props.filename} ({prettyBytes(this.props.filesize)})
-              </strong>
-            </p>
-            {!this.props.isProcessing && (
-              <Button.Group>
-                <Button onClick={this.props.discardImportFile}>
-                  Discard File
-                </Button>
-                <Button.Or />
-                <Button onClick={this.props.startDataImport} positive>
-                  Start Import
-                </Button>
-              </Button.Group>
-            )}
-            {this.props.isProcessing && (
-              <Progress
-                active
-                indicating
-                autoSuccess
-                total={this.props.linesToProcess}
-                value={this.props.linesProcessed}
-              />
-            )}
-          </React.Fragment>
-        )}
-      </div>
-    );
-  }
+          )}
+        </React.Fragment>
+      )}
+    </div>
+  );
 }
 
 DataImport.propTypes = {
@@ -80,6 +89,7 @@ DataImport.propTypes = {
   linesToProcess: PropTypes.number,
   linesProcessed: PropTypes.number,
   error: PropTypes.string,
+
   openImportFile: PropTypes.func,
   discardImportFile: PropTypes.func,
   startDataImport: PropTypes.func

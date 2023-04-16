@@ -20,10 +20,10 @@ class User extends React.Component {
             labelPosition="right"
           />
         }
-        header="Local data will de deleted!"
+        header="本地数据将被删除!"
         content={
           <Button
-            content="Confirm"
+            content="确认"
             negative
             style={{ marginTop: '1em' }}
             floated="right"
@@ -39,7 +39,7 @@ class User extends React.Component {
   signOutButtonLabel() {
     if (this.props.isDemo) return 'Reset demo';
 
-    return this.props.isAuthenticated ? 'Sign out' : 'Delete data';
+    return this.props.isAuthenticated ? '退出登录' : '清空本地数据';
   }
 
   signOutButtonIcon() {

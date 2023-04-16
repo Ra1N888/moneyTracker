@@ -8,38 +8,38 @@ import { loadSetting } from 'sagas/settings';
 import { isUserLoggedIn } from 'features/user/state/User.saga';
 
 export function* sendCodeSaga(): any {
-  const email = yield select(getSignInEmail);
-  try {
-    yield call(Auth.sendCode, email);
-    yield put(SignIn.sendCodeSuccess());
-  } catch (error) {
-    yield put(SignIn.sendCodeFailure(error));
-  }
+    const email = yield select(getSignInEmail);
+    try {
+        yield call(Auth.sendCode, email);
+        yield put(SignIn.sendCodeSuccess());0
+    } catch (error) {
+        // yield put(SignIn.sendCodeFailure(error));
+    }
 }
 
 export function* verifyCodeSaga(): any {
-  const email = yield select(getSignInEmail);
-  const code = yield select(getSignInCode);
-  try {
-    yield call(Auth.verifyCode, email, code);
-    yield put(SignIn.verifyCodeSuccess());
-  } catch (error) {
-    yield put(SignIn.verifyCodeFailure(error));
-  }
+    const email = yield select(getSignInEmail);
+    const code = yield select(getSignInCode);
+    try {
+        yield call(Auth.verifyCode, email, code);
+        yield put(SignIn.verifyCodeSuccess());
+    } catch (error) {
+        // yield put(SignIn.verifyCodeFailure(error));
+    }
 }
 
 export function* finishAuthSaga(): any {
-  const accessToken = yield call(Auth.parseHash);
-  const userInfo = yield call(Auth.getUserInfo, accessToken);
-  yield call([localStorage, 'setItem'], 'userInfo', JSON.stringify(userInfo));
+    const accessToken = yield call(Auth.parseHash);
+    const userInfo = yield call(Auth.getUserInfo, accessToken);
+    yield call([localStorage, 'setItem'], 'userInfo', JSON.stringify(userInfo));
 
-  yield loadSetting();
-  yield syncSaga();
-  yield isUserLoggedIn();
+    yield loadSetting();
+    yield syncSaga();
+    yield isUserLoggedIn();
 }
 
 export default [
-  takeLatest(getType(SignIn.sendCode), sendCodeSaga),
-  takeLatest(getType(SignIn.verifyCode), verifyCodeSaga),
-  takeLatest(getType(SignIn.finishAuth), finishAuthSaga)
+    takeLatest(getType(SignIn.sendCode), sendCodeSaga),
+    takeLatest(getType(SignIn.verifyCode), verifyCodeSaga),
+    takeLatest(getType(SignIn.finishAuth), finishAuthSaga)
 ];

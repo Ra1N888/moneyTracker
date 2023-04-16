@@ -21,13 +21,52 @@ import CsvReader from '../util/CsvReader';
 export function* startDataImportSaga() {
   try {
     const file = yield select(getImportFile);
+
+
+    console.log('saga:')
+    // console.dir(file)
+
     const { transactions, accounts, currencies } = yield call(CsvReader, file);
+
+    console.log('saga_transactions: ' + JSON.stringify(transactions))
+    console.log('saga_accounts: ' + Array.from(accounts.entries()))
+    console.log('saga_currencies: ' + Array.from(currencies))
+
+
+
+    console.log('this will be executed');
+
+
+
+
+
+
+
+
 
     yield put(importFileReadSuccess(transactions.length - 1));
     yield updateCurrencySettings(currencies);
-    const accountIdByName = yield mapAccountsId(accounts);
+    const accountIdByName = yield mapAccountsId(accounts); // Map, 新建不存在的账户
+    console.log('acountidbyname: ' + Array.from(accountIdByName.entries()))
+
+
+    // throw new Error('something went wrong');
+
 
     for (const [lineNr, transaction] of transactions.entries()) {
+
+
+      // console.log('lineNr_:')
+      // console.log(lineNr)
+      // console.log(Object.prototype.toString.call(lineNr))
+
+
+      // console.log('transaction_:')
+      // console.log(transaction)
+      // console.log(Object.prototype.toString.call(transaction))
+
+      // throw new Error('something went wrong');
+
       yield saveTransactionSaga(
         saveTransaction(
           formToState({
@@ -39,7 +78,14 @@ export function* startDataImportSaga() {
       );
       yield put(importLineProcessed(lineNr));
     }
+
+
+
+
   } catch (error) {
+
+
+    console.log('kkkkk')
     yield put(importFailure(error));
   }
 }
@@ -68,9 +114,12 @@ export function* updateCurrencySettings(currencies) {
  * @param {Map} accounts name => set of currencies map
  * @return {Map} account name => account id map
  */
-export function* mapAccountsId(accounts) {
+export function* mapAccountsId(accounts) { // key-value , 'wexin'-[cny,usd,jap]
   const idByName = new Map();
   for (const [name, currency] of accounts.entries()) {
+
+    console.log('map_name: ' + name)
+    console.log('map_currency: ' + currency)
     let account = yield select(getAccountByName(name));
     if (!account) account = yield createNewAccount(name, [...currency]);
 
@@ -96,7 +145,7 @@ export function* createNewAccount(name, currencies) {
       return acc;
     }, {}),
     currencies,
-    on_dashboard: false
+    on_dashboard: true
   });
   yield saveAccountSaga(saveAccount(account));
 

@@ -18,7 +18,7 @@ const ExchangeRate = props =>
       )}
       <Button
         basic
-        content="Update exchange rate"
+        content="更新汇率"
         icon="refresh"
         onClick={props.updateExchangeRate}
       />

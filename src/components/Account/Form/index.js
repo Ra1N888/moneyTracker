@@ -28,14 +28,14 @@ class AccountForm extends React.Component {
           <Form.Input
             width={9}
             required
-            label="Name"
-            placeholder="Account name"
+            label="名称"
+            placeholder="账户名称"
             value={this.props.form.name}
             onChange={this.handleNameChange}
           />
           <Form.Select
             width={7}
-            label="Group"
+            label="类型"
             value={this.props.form.group}
             options={this.groups}
             onChange={this.handleGroupChange}
@@ -47,12 +47,12 @@ class AccountForm extends React.Component {
         <Form.Group unstackable>
           <Form.Field width={9} style={{ paddingTop: '0.5em' }}>
             <Checkbox
-              label="Show on Dashboard"
+              label="在仪表盘中显示"
               checked={this.props.form.on_dashboard}
               onChange={this.props.toggleOnDashboard}
             />
           </Form.Field>
-          <Form.Button width={7} primary fluid content="Save Account" />
+          <Form.Button width={7} primary fluid content="创建此账户" />
         </Form.Group>
 
       </Form>

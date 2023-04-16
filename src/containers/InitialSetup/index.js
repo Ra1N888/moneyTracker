@@ -12,6 +12,7 @@ import { loadAccounts } from '../../actions/entities/accounts';
 import { getAccountsList } from '../../selectors/entities/accounts';
 import { isSignedIn } from 'features/user/state/User.selector';
 
+
 class InitialSetup extends React.Component {
   componentDidMount() {
     this.props.loadAccounts();
@@ -20,32 +21,27 @@ class InitialSetup extends React.Component {
   render() {
     return (
       <div className="container-raised-desktop">
-        <Header as="h2" icon="settings" content="Money Tracker Setup" />
+        <Header as="h1" icon="settings" content="初始设置" />
         <Divider />
         {!this.props.isAuthenticated && (
           <p>
-            <Link to="/auth">Sign in</Link> if you want to sync your data with
-            the cloud. You may also use the tracker without signing in. Your
-            data will be stored only on current device in this case. You can
-            sign in and sync your data any time later.
+            如果你想将你的数据与云端同步，<Link to="/auth">请通过邮箱登入。</Link>
+            你也可以在不登录的情况下使用该记账软件。在这种情况下，你的数据将只存储在此浏览器中。你可以在以后任何时候登录并同步你的数据。
           </p>
         )}
-        <Header as="h2">Currencies</Header>
+        <Header as="h2">汇率</Header>
         <p>
-          Select your base currency — the currency which will be used by
-          default.
+          选择你的基础货币（默认使用的货币）
           <br />
-          You can also select any number of additional currencies, if you use
-          them.
+          你也可以选择其他国家的货币。
         </p>
         <CurrencyInput />
         <CurrencyExchangeRate />
-        <Header as="h2">Accounts</Header>
+        <Header as="h2">账户</Header>
         <p>
-          Create accounts that you would like to keep track of.
+          创建你想追踪的账户。
           <br />
-          It could be cash in your wallet, bank accounts, credit cards or even a
-          loan to your friend.
+          它可能是你钱包里的现金，银行账户，信用卡，储蓄卡或资产。
         </p>
         <AccountForm />
         {this.props.accounts.length > 0 && (

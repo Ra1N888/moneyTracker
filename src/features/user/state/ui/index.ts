@@ -7,14 +7,14 @@ import SignOutReducer, {
 import SignInSaga from './SignIn.saga';
 import SignOutSaga from './SignOut.saga';
 
-export interface UserUiStateT {
-  signIn: SignInStateT;
-  signOut: SignOutStateT;
-}
+// export interface UserUiStateT {
+//   signIn: SignInStateT;
+//   signOut: SignOutStateT;
+// }
 
-export type UserUiActionT = SignInActionT & SignOutActionT;
+// export type UserUiActionT = SignInActionT & SignOutActionT;
 
-export const UserUiReducer = combineReducers<UserUiStateT, UserUiActionT>({
+export const UserUiReducer = combineReducers({
   signIn: SignInReducer,
   signOut: SignOutReducer
 });

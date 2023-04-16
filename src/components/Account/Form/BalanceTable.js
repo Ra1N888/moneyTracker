@@ -61,7 +61,7 @@ class BalanceTable extends React.Component {
             <Input
               fluid
               type="number"
-              placeholder="Balance"
+              placeholder="余额"
               labelPosition="right"
               label={code}
               step={Currency.minAmount(code)}

@@ -19,11 +19,15 @@ const initialState = {
 
 export default handleActions(
   {
-    [openImportFile]: (state, action) => ({
-      ...state,
-      isFileSelected: true,
-      file: action.payload
-    }),
+    [openImportFile]: (state, action) => {
+
+      // if (action.payload) console.dir(action.payload);
+      return {
+        ...state,
+        isFileSelected: true,
+        file: action.payload,
+      }
+    },
     [discardImportFile]: state => ({
       ...state,
       isFileSelected: false,

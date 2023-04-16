@@ -54,11 +54,11 @@ export enum DeleteStrategyT {
 }
 
 const GroupToTextMap: { [code in AccountGroupT]?: string } = {
-  [AccountGroupT.Cash]: 'Cash',
-  [AccountGroupT.Bank]: 'Bank Account',
-  [AccountGroupT.Deposit]: 'Deposit',
-  [AccountGroupT.Credit]: 'Credit',
-  [AccountGroupT.Asset]: 'Asset'
+  [AccountGroupT.Cash]: '现金',
+  [AccountGroupT.Bank]: '银行账户',
+  [AccountGroupT.Deposit]: '存款',
+  [AccountGroupT.Credit]: '信用卡',
+  [AccountGroupT.Asset]: '资产'
 };
 
 export const defaultGroup = AccountGroupT.Cash;
@@ -80,19 +80,19 @@ export function getDeleteStartegyOptions(hasMultipleAccounts = false) {
     {
       key: DeleteStrategyT.Archive,
       value: DeleteStrategyT.Archive,
-      text: 'Archive account, keep transactions as is'
+      text: '归档账户，保存交易记录'
     },
     {
       key: DeleteStrategyT.Cleanup,
       value: DeleteStrategyT.Cleanup,
-      text: 'Delete transactions with account'
+      text: '删除此账户下的所有交易记录'
     }
   ];
   if (hasMultipleAccounts) {
     stratgies.push({
       key: DeleteStrategyT.Move,
       value: DeleteStrategyT.Move,
-      text: 'Move transactions to another account'
+      text: '将此账户下的交易记录移至其他账户'
     });
   }
 

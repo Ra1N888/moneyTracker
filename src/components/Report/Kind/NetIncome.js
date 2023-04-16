@@ -46,7 +46,7 @@ class ExpenseIncome extends React.Component {
                     showCents={false}
                   />
                 </Statistic.Value>
-                <Statistic.Label>Total net income</Statistic.Label>
+                <Statistic.Label>总净收入</Statistic.Label>
               </Statistic>
               <Statistic>
                 <Statistic.Value>
@@ -60,7 +60,7 @@ class ExpenseIncome extends React.Component {
                     showCents={false}
                   />
                 </Statistic.Value>
-                <Statistic.Label>Average net income</Statistic.Label>
+                <Statistic.Label>平均净收入</Statistic.Label>
               </Statistic>
             </Statistic.Group>
           </div>

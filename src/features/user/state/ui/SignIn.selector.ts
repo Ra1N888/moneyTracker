@@ -1,4 +1,4 @@
-import { RootStateT } from 'reducers';
+// import { RootStateT } from 'reducers';
 
-export const getSignInEmail = ({ user }: RootStateT) => user.ui.signIn.email;
-export const getSignInCode = ({ user }: RootStateT) => user.ui.signIn.code;
+export const getSignInEmail = ({ user }: any) => user.ui.signIn.email;
+export const getSignInCode = ({ user }: any) => user.ui.signIn.code;

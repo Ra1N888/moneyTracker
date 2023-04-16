@@ -16,9 +16,10 @@ export default {
 };
 
 async function sync(readOnly = false) {
+
   if (!remoteAccountsDB()) return;
   let accounts;
-
+  
   // remote => local
   const from = await accountsDB().replicate.from(remoteAccountsDB());
   if (from.docs_written > 0) {
